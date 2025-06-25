@@ -10,12 +10,18 @@
 
 namespace MT {
 
-void spmm_csr_seq(const MT::CSRMatrix *A,
+void spmm_csr_seq(const MT::DRAMCSRMatrix *A,
                   const MT::DenseMatrix *B,
                   MT::DenseMatrix *C/*out*/);
 
-void spmm_csr_seq_column_segment(const MT::CSRMatrix *A, int64_t A1_tile, int64_t A2_tile,
-                                 const MT::DenseMatrix *B, int64_t B1_tile, int64_t B2_tile,
+void spmm_csr_seq_column_segment_v0(const MT::DRAMCSRMatrix *A, uint64_t A1_tile, uint64_t A2_tile,
+                                 const MT::DenseMatrix *B, uint64_t B1_tile, uint64_t B2_tile,
+                                 MT::DenseMatrix *C/*out*/);
+void spmm_csr_seq_column_segment_v1(const MT::DRAMCSRMatrix *A, uint64_t A1_tile, uint64_t A2_tile,
+                                 const MT::DenseMatrix *B, uint64_t B1_tile, uint64_t B2_tile,
+                                 MT::DenseMatrix *C/*out*/);
+void spmm_csr_seq_column_segment_v2(const MT::DRAMCSRMatrix *A, uint64_t A1_tile, uint64_t A2_tile,
+                                 const MT::DenseMatrix *B, uint64_t B1_tile, uint64_t B2_tile,
                                  MT::DenseMatrix *C/*out*/);
 
 }  /// namespace MT

@@ -10,18 +10,18 @@
 namespace MT {
 
 struct DenseMatrix {
-  int64_t num_rows_ = 0;
-  int64_t num_cols_ = 0;
+  uint64_t num_rows_ = 0;
+  uint64_t num_cols_ = 0;
   double *values_ = nullptr;
 
   DenseMatrix() = default;
-  DenseMatrix(int64_t num_rows,
-              int64_t num_cols);
+  DenseMatrix(uint64_t num_rows,
+              uint64_t num_cols);
   virtual ~DenseMatrix();
 
-  void alloc_values(int64_t size);
-  void alloc_matrix(int64_t num_rows,
-                    int64_t num_cols);
+  void alloc_values(uint64_t size);
+  void alloc_matrix(uint64_t num_rows,
+                    uint64_t num_cols);
 
   void reset();
 

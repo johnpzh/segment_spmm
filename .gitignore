@@ -1,3 +1,10 @@
+# Output
+output*/
+output.*
+output_*
+*.csv
+*.log
+
 # Build
 cmake-build-debug/
 cmake-build*/

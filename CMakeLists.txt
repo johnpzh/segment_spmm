@@ -29,5 +29,5 @@ target_link_libraries(spmm_csr PUBLIC sparse_matrix dense_matrix)
 
 add_executable(segment_spmm main.cpp)
 
-add_executable(run_spmm_csr app/run_spmm_csr.cpp)
-target_link_libraries(run_spmm_csr PRIVATE mt_io spmm_csr)
+add_executable(run_dram_spmm_csr app/run_dram_spmm_csr.cpp)
+target_link_libraries(run_dram_spmm_csr PRIVATE mt_io spmm_csr)
