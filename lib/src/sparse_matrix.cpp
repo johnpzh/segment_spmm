@@ -54,4 +54,66 @@ MT::DRAMCSRMatrix::~DRAMCSRMatrix() {
   free(values_);
 }
 
+void MT::get_tiling_table_for_pos(
+    const DRAMCSRMatrix *A,
+    uint64_t row_idx_start,
+    uint64_t row_idx_bound,
+    uint64_t A2_tile,
+    uint64_t &num_tiles/*out*/,
+    std::vector<std::vector<uint64_t>> &table/*out*/)
+{
+  uint64_t left_col_id = UINT64_MAX;
+  uint64_t right_col_id = 0;
+  for (uint64_t i = row_idx_start; i < row_idx_bound; ++i) {
+    for (uint64_t k_loc = A->row_offsets_[i]; k_loc < A->row_offsets_[i + 1]; ++k_loc) {
+      uint64_t k = A->col_ind_[k_loc];
+      if (k < left_col_id) {
+        left_col_id = k;
+      }
+      if (k > right_col_id) {
+        right_col_id = k;
+      }
+    }
+  }
+  num_tiles = ((right_col_id - left_col_id + 1) + (A2_tile - 1)) / A2_tile;
+  table = std::vector<std::vector<uint64_t>>(row_idx_bound - row_idx_start, std::vector<uint64_t>(num_tiles + 1));
+
+  for (uint64_t row_idx = row_idx_start; row_idx < row_idx_bound; ++row_idx) {
+    uint64_t k_loc_start = A->row_offsets_[row_idx];
+    uint64_t k_loc_bound = A->row_offsets_[row_idx + 1];
+    uint64_t curr_k_loc = k_loc_start;
+    table[row_idx - row_idx_start][0] = k_loc_start;
+
+    uint64_t col_id_start = left_col_id;
+    for (uint64_t tile_idx = 1; tile_idx < num_tiles + 1; ++tile_idx) {
+      uint64_t col_id_bound = std::min(col_id_start + A2_tile, right_col_id + 1);
+      while (curr_k_loc < k_loc_bound) {
+        uint64_t k = A->col_ind_[curr_k_loc];
+        if (k >= col_id_bound || k < col_id_start) {
+          break;
+        }
+        ++curr_k_loc;
+      }
+      table[row_idx - row_idx_start][tile_idx] = curr_k_loc;
+      col_id_start += A2_tile;
+    }
+  }
+
+//  /// test
+//  std::cout << __FILE__ << ":" << __LINE__ << "\n";
+//  std::cout << "row_idx_start: " << row_idx_start << "\n";
+//  std::cout << "row_idx_bound: " << row_idx_bound << "\n";
+//  std::cout << "A2_tile: " << A2_tile << "\n";
+//  std::cout << "num_tiles: " << num_tiles << "\n";
+//  printf("print the table...\n");
+//  for (auto &row : table) {
+//    for (auto e : row) {
+//      std::cout << e << " ";
+//    }
+//    std::cout << "\n";
+//  }
+//  std::cout << "\n";
+//  /// end test
+}
+
 /******* End DRAMCSRMatrix **********/

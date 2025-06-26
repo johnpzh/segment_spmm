@@ -31,3 +31,6 @@ add_executable(segment_spmm main.cpp)
 
 add_executable(run_dram_spmm_csr app/run_dram_spmm_csr.cpp)
 target_link_libraries(run_dram_spmm_csr PRIVATE mt_io spmm_csr)
+
+add_executable(dummy_run app/dummy_run.cpp)
+target_link_libraries(dummy_run PRIVATE mt_io spmm_csr)

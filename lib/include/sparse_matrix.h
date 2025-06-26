@@ -6,6 +6,8 @@
 #define SPMM_FORMAT_SPARSE_MATRIX_H
 
 #include <iostream>
+#include <vector>
+#include <limits.h>
 
 namespace MT {
 
@@ -31,6 +33,14 @@ struct DRAMCSRMatrix {
                     uint64_t num_cols,
                     uint64_t nnz);
 };
+
+void get_tiling_table_for_pos(
+    const DRAMCSRMatrix *A,
+    uint64_t row_idx_start,
+    uint64_t row_idx_bound,
+    uint64_t A2_tile,
+    uint64_t &num_tiles/*out*/,
+    std::vector<std::vector<uint64_t>> &table/*out*/);
 
 } /// namespace MT
 

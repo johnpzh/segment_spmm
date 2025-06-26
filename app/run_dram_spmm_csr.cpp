@@ -198,7 +198,7 @@ int main(int argc, char *argv[])
 //  output_matrix.reset();
 //
 //  /// Tile sizes
-//  int64_t tile_dim_size = 3;
+//  int64_t tile_dim_size = 5;
 //  int64_t A1_tile = tile_dim_size;
 //  int64_t A2_tile = tile_dim_size;
 //  int64_t B1_tile = A2_tile;
@@ -207,7 +207,7 @@ int main(int argc, char *argv[])
 //  /// Kernel
 //  auto tt_start = std::chrono::high_resolution_clock::now();
 ////  MT::spmm_csr_seq(/*A=*/&csr_matrix, /*B=*/&dense_matrix, /*C=*/&output_matrix);
-//  MT::spmm_csr_seq_column_segment(
+//  MT::spmm_csr_seq_column_segment_v2(
 //      /*A=*/&csr_matrix, A1_tile, A2_tile,
 //      /*B=*/&dense_matrix, B1_tile, B2_tile,
 //      /*C=*/&output_matrix);

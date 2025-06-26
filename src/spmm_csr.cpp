@@ -110,28 +110,28 @@ void MT::spmm_csr_seq_column_segment_v2(const MT::DRAMCSRMatrix *A, uint64_t A1_
 
   for (uint64_t ii = 0; ii < A1; ii += A1_tile) {
     uint64_t i_bound = std::min(ii + A1_tile, A1);
-    for (uint64_t kk = 0; kk < A2; kk += A2_tile) {
-      uint64_t k_bound = std::min(kk + A2_tile, A2);
+    uint64_t num_tiles;
+    std::vector<std::vector<uint64_t>> table;
+    MT::get_tiling_table_for_pos(A,
+                                 /*row_idx_start=*/ii,
+                                 /*row_idx_bound=*/i_bound,
+                                 /*A2_tile=*/A2_tile,
+                                 num_tiles/*out*/,
+                                 table/*out*/);
+    for (uint64_t kk_tile_i = 0; kk_tile_i < num_tiles; ++kk_tile_i) {
       for (uint64_t jj = 0; jj < B2; jj += B2_tile) {
         uint64_t j_bound = std::min(jj + B2_tile, B2);
+        /// Tile
         for (uint64_t i = ii; i < i_bound; ++i) {
-          /// TODO: ???
-
-          for (uint64_t k_loc = A->row_offsets_[i]; k_loc < A->row_offsets_[i + 1]; ++k_loc) {
+//          /// test
+//          printf("table[%llu][%llu]: %llu\n", i - ii, kk_tile_i, table[i - ii][kk_tile_i]);
+//          printf("-> table[%llu][%llu]: %llu\n", i - ii, kk_tile_i + 1, table[i - ii][kk_tile_i + 1]);
+//          /// end
+          for (uint64_t k_loc = table[i - ii][kk_tile_i]; k_loc < table[i - ii][kk_tile_i + 1]; ++k_loc) {
             uint64_t k = A->col_ind_[k_loc];
-            if (k < kk) {
-              continue;
-            }
-            if (k >= k_bound) {
-              break;
-            }
             double A_val = A->values_[k_loc];
-            for (uint64_t jj = 0; jj < B2; jj += B2_tile) {
-              uint64_t j_bound = std::min(jj + B2_tile, B2);
-              for (uint64_t j = jj; j < j_bound; ++j) {
-                double B_val = B->values_[k * B2 + j];
-                C->values_[i * B2 + j] += A_val * B_val;
-              }
+            for (uint64_t j = jj; j < j_bound; ++j) {
+              C->values_[i * B2 + j] += A_val * B->values_[k * B2 + j];
             }
           }
         }
