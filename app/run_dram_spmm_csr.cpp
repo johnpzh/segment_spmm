@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 //    filename = argv[1];
 //  }
 
-  uint64_t num_repeats = 10;
+  uint64_t num_repeats = 4;
 //  uint64_t num_repeats = 2;
 
   std::vector<std::string> matrix_list;
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 //  std::vector<double> spmm_tiling_avg_time_list;
   std::unordered_map<uint64_t, std::vector<double>> spmm_tiling_avg_time_map;
   std::vector<uint64_t> tile_dim_size_list;
-  for (uint64_t tile_dim_size = 4; tile_dim_size <= 512; tile_dim_size *= 2) {
+  for (uint64_t tile_dim_size = 128; tile_dim_size <= 4096; tile_dim_size *= 2) {
     tile_dim_size_list.push_back(tile_dim_size);
   }
 //  tile_dim_size_list = {8, 16};
@@ -69,21 +69,35 @@ int main(int argc, char *argv[])
 //    std::vector<double> tiling_exe_time_list;
     std::unordered_map<uint64_t, std::vector<double>> tiling_exe_time_map;
 
+    /// Sparse matrix A
+    MT::DRAMCSRMatrix csr_matrix;
+    MT::read_csr_matrix(file_name.c_str(), &csr_matrix);
+
+    /// Dense matrix B
+    int64_t A1 = csr_matrix.num_rows_;
+    int64_t A2 = csr_matrix.num_cols_;
+    int64_t B2 = MAX_B2;
+    MT::DRAMDenseMatrix dense_matrix;
+    MT::create_random_dense_matrix(A2, B2, &dense_matrix);
+
+    /// Dense matrix C
+    MT::DRAMDenseMatrix output_matrix(A1, B2);
+
     /// No Tiling
     for (uint64_t r_i = 0; r_i < num_repeats; ++r_i) {
-      /// Sparse matrix A
-      MT::DRAMCSRMatrix csr_matrix;
-      MT::read_csr_matrix(file_name.c_str(), &csr_matrix);
+//      /// Sparse matrix A
+//      MT::DRAMCSRMatrix csr_matrix;
+//      MT::read_csr_matrix(file_name.c_str(), &csr_matrix);
+//
+//      /// Dense matrix B
+//      int64_t A1 = csr_matrix.num_rows_;
+//      int64_t A2 = csr_matrix.num_cols_;
+//      int64_t B2 = MAX_B2;
+//      MT::DRAMDenseMatrix dense_matrix;
+//      MT::create_random_dense_matrix(A2, B2, &dense_matrix);
 
-      /// Dense matrix B
-      int64_t A1 = csr_matrix.num_rows_;
-      int64_t A2 = csr_matrix.num_cols_;
-      int64_t B2 = MAX_B2;
-      MT::DenseMatrix dense_matrix;
-      MT::create_random_dense_matrix(A2, B2, &dense_matrix);
-
-      /// Dense matrix C
-      MT::DenseMatrix output_matrix(A1, B2);
+//      /// Dense matrix C
+//      MT::DRAMDenseMatrix output_matrix(A1, B2);
       output_matrix.reset();
 
       /// Kernel
@@ -110,19 +124,19 @@ int main(int argc, char *argv[])
     /// Tiling
     for (uint64_t tile_dim_size: tile_dim_size_list) {
       for (uint64_t r_i = 0; r_i < num_repeats; ++r_i) {
-        /// Sparse matrix A
-        MT::DRAMCSRMatrix csr_matrix;
-        MT::read_csr_matrix(file_name.c_str(), &csr_matrix);
+//        /// Sparse matrix A
+//        MT::DRAMCSRMatrix csr_matrix;
+//        MT::read_csr_matrix(file_name.c_str(), &csr_matrix);
+//
+//        /// Dense matrix B
+//        int64_t A1 = csr_matrix.num_rows_;
+//        int64_t A2 = csr_matrix.num_cols_;
+//        int64_t B2 = MAX_B2;
+//        MT::DRAMDenseMatrix dense_matrix;
+//        MT::create_random_dense_matrix(A2, B2, &dense_matrix);
 
-        /// Dense matrix B
-        int64_t A1 = csr_matrix.num_rows_;
-        int64_t A2 = csr_matrix.num_cols_;
-        int64_t B2 = MAX_B2;
-        MT::DenseMatrix dense_matrix;
-        MT::create_random_dense_matrix(A2, B2, &dense_matrix);
-
-        /// Dense matrix C
-        MT::DenseMatrix output_matrix(A1, B2);
+//        /// Dense matrix C
+//        MT::DRAMDenseMatrix output_matrix(A1, B2);
         output_matrix.reset();
 
         /// Tile sizes
@@ -225,11 +239,11 @@ int main(int argc, char *argv[])
 ////    B2 = A2;
 //    B2 = 4;
 //  }
-//  MT::DenseMatrix dense_matrix;
+//  MT::DRAMDenseMatrix dense_matrix;
 //  MT::create_random_dense_matrix(A2, B2, &dense_matrix);
 //
 //  /// Dense matrix C
-//  MT::DenseMatrix output_matrix(A1, B2);
+//  MT::DRAMDenseMatrix output_matrix(A1, B2);
 //  output_matrix.reset();
 //
 //  /// Tile sizes

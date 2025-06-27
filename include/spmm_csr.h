@@ -11,18 +11,18 @@
 namespace MT {
 
 void spmm_csr_seq(const MT::DRAMCSRMatrix *A,
-                  const MT::DenseMatrix *B,
-                  MT::DenseMatrix *C/*out*/);
+                  const MT::DRAMDenseMatrix *B,
+                  MT::DRAMDenseMatrix *C/*out*/);
 
 void spmm_csr_seq_column_segment_v0(const MT::DRAMCSRMatrix *A, uint64_t A1_tile, uint64_t A2_tile,
-                                 const MT::DenseMatrix *B, uint64_t B1_tile, uint64_t B2_tile,
-                                 MT::DenseMatrix *C/*out*/);
+                                    const MT::DRAMDenseMatrix *B, uint64_t B1_tile, uint64_t B2_tile,
+                                    MT::DRAMDenseMatrix *C/*out*/);
 void spmm_csr_seq_column_segment_v1(const MT::DRAMCSRMatrix *A, uint64_t A1_tile, uint64_t A2_tile,
-                                 const MT::DenseMatrix *B, uint64_t B1_tile, uint64_t B2_tile,
-                                 MT::DenseMatrix *C/*out*/);
+                                    const MT::DRAMDenseMatrix *B, uint64_t B1_tile, uint64_t B2_tile,
+                                    MT::DRAMDenseMatrix *C/*out*/);
 void spmm_csr_seq_column_segment_v2(const MT::DRAMCSRMatrix *A, uint64_t A1_tile, uint64_t A2_tile,
-                                 const MT::DenseMatrix *B, uint64_t B1_tile, uint64_t B2_tile,
-                                 MT::DenseMatrix *C/*out*/);
+                                    const MT::DRAMDenseMatrix *B, uint64_t B1_tile, uint64_t B2_tile,
+                                    MT::DRAMDenseMatrix *C/*out*/);
 
 }  /// namespace MT
 

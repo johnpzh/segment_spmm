@@ -30,7 +30,7 @@ void print_csr_matrix(const DRAMCSRMatrix *csr_matrix);
 /// Create Dense Matrix
 void create_random_dense_matrix(uint64_t num_rows,
                                 uint64_t num_cols,
-                                DenseMatrix *dense_matrix);
+                                DRAMDenseMatrix *dense_matrix);
 
 }  /// namespace MT
 

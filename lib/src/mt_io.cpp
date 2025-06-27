@@ -212,7 +212,7 @@ void MT::read_csr_matrix(const char *filename,
 /// Create a dense matrix
 void MT::create_random_dense_matrix(uint64_t num_rows,
                                     uint64_t num_cols,
-                                    DenseMatrix *dense_matrix) {
+                                    DRAMDenseMatrix *dense_matrix) {
   srand(17);
   dense_matrix->alloc_matrix(num_rows, num_cols);
   uint64_t nnz = num_rows * num_cols;

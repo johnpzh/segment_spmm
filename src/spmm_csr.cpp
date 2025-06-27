@@ -7,8 +7,8 @@
 
 /// C[i,j] = A[i,k] * B[k,j]
 void MT::spmm_csr_seq(const MT::DRAMCSRMatrix *A,
-                      const MT::DenseMatrix *B,
-                      MT::DenseMatrix *C/*out*/)
+                      const MT::DRAMDenseMatrix *B,
+                      MT::DRAMDenseMatrix *C/*out*/)
 {
   uint64_t A1 = A->num_rows_;
   uint64_t B2 = B->num_cols_;
@@ -28,8 +28,8 @@ void MT::spmm_csr_seq(const MT::DRAMCSRMatrix *A,
 
 /// C[i,j] = A[i,k] * B[k,j]
 void MT::spmm_csr_seq_column_segment_v0(const MT::DRAMCSRMatrix *A, uint64_t A1_tile, uint64_t A2_tile,
-                                     const MT::DenseMatrix *B, uint64_t B1_tile, uint64_t B2_tile,
-                                     MT::DenseMatrix *C/*out*/)
+                                        const MT::DRAMDenseMatrix *B, uint64_t B1_tile, uint64_t B2_tile,
+                                        MT::DRAMDenseMatrix *C/*out*/)
 {
   uint64_t A1 = A->num_rows_;
   uint64_t A2 = A->num_cols_;
@@ -65,8 +65,8 @@ void MT::spmm_csr_seq_column_segment_v0(const MT::DRAMCSRMatrix *A, uint64_t A1_
 
 /// C[i,j] = A[i,k] * B[k,j]
 void MT::spmm_csr_seq_column_segment_v1(const MT::DRAMCSRMatrix *A, uint64_t A1_tile, uint64_t A2_tile,
-                                     const MT::DenseMatrix *B, uint64_t B1_tile, uint64_t B2_tile,
-                                     MT::DenseMatrix *C/*out*/)
+                                        const MT::DRAMDenseMatrix *B, uint64_t B1_tile, uint64_t B2_tile,
+                                        MT::DRAMDenseMatrix *C/*out*/)
 {
   uint64_t A1 = A->num_rows_;
   uint64_t A2 = A->num_cols_;
@@ -101,8 +101,8 @@ void MT::spmm_csr_seq_column_segment_v1(const MT::DRAMCSRMatrix *A, uint64_t A1_
 
 /// C[i,j] = A[i,k] * B[k,j]
 void MT::spmm_csr_seq_column_segment_v2(const MT::DRAMCSRMatrix *A, uint64_t A1_tile, uint64_t A2_tile,
-                                     const MT::DenseMatrix *B, uint64_t B1_tile, uint64_t B2_tile,
-                                     MT::DenseMatrix *C/*out*/)
+                                        const MT::DRAMDenseMatrix *B, uint64_t B1_tile, uint64_t B2_tile,
+                                        MT::DRAMDenseMatrix *C/*out*/)
 {
   uint64_t A1 = A->num_rows_;
   uint64_t A2 = A->num_cols_;
