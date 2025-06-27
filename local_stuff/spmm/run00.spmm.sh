@@ -1,9 +1,10 @@
 
 PREV_DIR=$(readlink -f .)
-BUILD_DIR="${PREV_DIR}/../../cmake-build-debug"
-#BUILD_DIR="${PREV_DIR}/../../build"
+#BUILD_DIR="${PREV_DIR}/../../cmake-build-debug"
+BUILD_DIR="${PREV_DIR}/../../build"
 
-DATA_DIR="/Users/peng599/Library/CloudStorage/OneDrive-PNNL/Documents/Datasets"
+#DATA_DIR="/Users/peng599/Library/CloudStorage/OneDrive-PNNL/Documents/Datasets"
+DATA_DIR="/home/peng599/peng599/Data/data"
 
 OUTPUT_DIR="output.$(date +%FT%T)"
 mkdir -p ${OUTPUT_DIR}
